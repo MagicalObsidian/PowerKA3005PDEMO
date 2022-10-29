@@ -8,16 +8,252 @@
     Width="800"
     Height="450"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    Icon="/Resources/icon_power.png"
     WindowStartupLocation="CenterScreen"
     WindowStyle="SingleBorderWindow">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*" />
+            <ColumnDefinition Width="70*" />
+        </Grid.ColumnDefinitions>
 
-        <StackPanel />
+        <!--  串口通信  -->
+        <GroupBox
+            Grid.Column="0"
+            Margin="10"
+            Padding="10"
+            Header="串口通信">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="70*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="可用串口：" />
+                <ComboBox
+                    x:Name="cbxSerialPortList"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding}" />
 
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="连接状态：" />
+                <TextBlock
+                    x:Name="tbxStatus"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="未连接" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="波特率：" />
+                <ComboBox
+                    x:Name="cbxBaudRate"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="奇偶校验：" />
+                <ComboBox
+                    x:Name="cbxParity"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding}" />
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="数据位：" />
+                <ComboBox
+                    x:Name="cbxDataBits"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding}" />
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="停止位：" />
+                <ComboBox
+                    x:Name="cbxStopBits"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding}" />
+                <Button
+                    x:Name="btnSwitch"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Width="150"
+                    Margin="5"
+                    hc:BorderElement.CornerRadius="10"
+                    hc:IconElement.Geometry="{StaticResource AlignVCenterGeometry}"
+                    Click="btnSwitch_Click"
+                    Content="连接电源"
+                    Style="{StaticResource ButtonPrimary}" />
+            </Grid>
+        </GroupBox>
+
+        <!--  电源控制面板  -->
+        <GroupBox
+            Grid.Column="1"
+            Margin="10"
+            Padding="10"
+            Header="电源控制">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <StackPanel Margin="5" Orientation="Horizontal">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="当前电流值" />
+                            <hc:OutlineText
+                                Name="text_currentI"
+                                Width="100"
+                                Height="auto"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Fill="#326cf3"
+                                FontSize="25"
+                                FontWeight="Bold"
+                                Text="12.00"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Text="A" />
+                        </StackPanel>
+
+                        <hc:NumericUpDown
+                            Name="I_Input"
+                            Width="auto"
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            hc:InfoElement.Placeholder="输入电流"
+                            hc:TitleElement.Title="设置电流"
+                            hc:TitleElement.TitlePlacement="Left"
+                            Style="{StaticResource NumericUpDownPlus}"
+                            ValueFormat="#0.00"
+                            Value="{Binding ElementName=slider_I_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <hc:PreviewSlider
+                            Name="slider_I_SetValue"
+                            Width="{Binding ElementName=I_Input}"
+                            Margin="10"
+                            Maximum="100"
+                            Value="500">
+                            <hc:PreviewSlider.PreviewContent>
+                                <Label
+                                    Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
+                                    ContentStringFormat="#0.00"
+                                    Style="{StaticResource LabelPrimary}" />
+                            </hc:PreviewSlider.PreviewContent>
+                        </hc:PreviewSlider>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="10">
+                        <StackPanel Margin="5" Orientation="Horizontal">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="当前电压值" />
+                            <hc:OutlineText
+                                Name="text_currentV"
+                                Width="100"
+                                Height="auto"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Fill="#326cf3"
+                                FontSize="25"
+                                FontWeight="Bold"
+                                Text="12.00"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Text="V" />
+                        </StackPanel>
+
+                        <hc:NumericUpDown
+                            Name="V_Input"
+                            Width="auto"
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            hc:InfoElement.Placeholder="输入电压"
+                            hc:TitleElement.Title="设置电压"
+                            hc:TitleElement.TitlePlacement="Left"
+                            Style="{StaticResource NumericUpDownPlus}"
+                            ValueFormat="#0.00"
+                            Value="{Binding ElementName=slider_V_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <hc:PreviewSlider
+                            Name="slider_V_SetValue"
+                            Width="{Binding ElementName=V_Input}"
+                            Margin="10"
+                            Maximum="100"
+                            Value="500">
+                            <hc:PreviewSlider.PreviewContent>
+                                <Label
+                                    Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
+                                    ContentStringFormat="#0.00"
+                                    Style="{StaticResource LabelPrimary}" />
+                            </hc:PreviewSlider.PreviewContent>
+                        </hc:PreviewSlider>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Grid.Row="1" Margin="10">
+                    <Button Name="Enter" Content="输入" />
+                </StackPanel>
+
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>

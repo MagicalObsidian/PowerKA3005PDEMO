@@ -164,7 +164,7 @@
                                 Fill="#326cf3"
                                 FontSize="25"
                                 FontWeight="Bold"
-                                Text="12.00"
+                                Text="3.00"
                                 TextAlignment="Center" />
                             <TextBlock
                                 HorizontalAlignment="Right"
@@ -181,18 +181,18 @@
                             hc:TitleElement.Title="设置电流"
                             hc:TitleElement.TitlePlacement="Left"
                             Style="{StaticResource NumericUpDownPlus}"
-                            ValueFormat="#0.00"
+                            ValueFormat="#0.000"
                             Value="{Binding ElementName=slider_I_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <hc:PreviewSlider
                             Name="slider_I_SetValue"
                             Width="{Binding ElementName=I_Input}"
                             Margin="10"
-                            Maximum="100"
+                            Maximum="5.1"
                             Value="500">
                             <hc:PreviewSlider.PreviewContent>
                                 <Label
                                     Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
-                                    ContentStringFormat="#0.00"
+                                    ContentStringFormat="#0.000"
                                     Style="{StaticResource LabelPrimary}" />
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
@@ -230,28 +230,77 @@
                             hc:TitleElement.Title="设置电压"
                             hc:TitleElement.TitlePlacement="Left"
                             Style="{StaticResource NumericUpDownPlus}"
-                            ValueFormat="#0.00"
+                            ValueFormat="#0.000"
                             Value="{Binding ElementName=slider_V_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <hc:PreviewSlider
                             Name="slider_V_SetValue"
                             Width="{Binding ElementName=V_Input}"
                             Margin="10"
-                            Maximum="100"
+                            Maximum="31"
                             Value="500">
                             <hc:PreviewSlider.PreviewContent>
                                 <Label
                                     Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
-                                    ContentStringFormat="#0.00"
+                                    ContentStringFormat="#0.000"
                                     Style="{StaticResource LabelPrimary}" />
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
                     </StackPanel>
                 </Grid>
 
-                <StackPanel Grid.Row="1" Margin="10">
-                    <Button Name="Enter" Content="输入" />
-                </StackPanel>
+                <!--  操作控制  -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
+
+                    <Grid Margin="10">
+                        <StackPanel Orientation="Vertical">
+
+                            <hc:ButtonGroup
+                                Width="auto"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <RadioButton
+                                    Margin="5"
+                                    Content="M1"
+                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                                <RadioButton
+                                    Margin="5"
+                                    Content="M2"
+                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                                <RadioButton
+                                    Margin="5"
+                                    Content="M3"
+                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                                <RadioButton
+                                    Margin="5"
+                                    Content="M4"
+                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                                <RadioButton
+                                    Margin="5"
+                                    Content="M5"
+                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                            </hc:ButtonGroup>
+
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <Button
+                                    Width="auto"
+                                    Margin="5"
+                                    Content="保存设定值"
+                                    Style="{StaticResource ButtonPrimary}" />
+                                <Button
+                                    Width="auto"
+                                    Margin="5"
+                                    Content="读取设定值"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
             </Grid>
         </GroupBox>
 

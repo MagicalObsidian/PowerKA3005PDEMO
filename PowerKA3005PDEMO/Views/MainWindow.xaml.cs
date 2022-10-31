@@ -23,7 +23,7 @@ namespace PowerKA3005PDEMO.Views
         //串口实例
         SerialPort serialPort = new SerialPort();
 
-        //电源 库 的实例
+        //电源库 的实例
         PowerOperate powerOperate = new PowerOperate();
         PowerSet powerSet = new PowerSet();
         PowerRead powerRead = new PowerRead();
@@ -201,11 +201,13 @@ namespace PowerKA3005PDEMO.Views
                 {
                     serialPort.Write(powerOperate.OUT_Cmd_Operate(true));
                     OUT_STATUS = true;
+                    badge_OUT.Status = HandyControl.Data.BadgeStatus.Processing;
                 }
                 else
                 {
                     serialPort.Write(powerOperate.OUT_Cmd_Operate(false));
                     OUT_STATUS = false;
+                    badge_OUT.Status = HandyControl.Data.BadgeStatus.Dot;
                 }
             }
         }
@@ -294,9 +296,9 @@ namespace PowerKA3005PDEMO.Views
         {
             if (serialPort.IsOpen)
             {
+                //读输出电压电流值
                 serialPort.Write(powerRead.IOUT_Read); Thread.Sleep(100);
                 string i = GetReceiveMsg();
-
                 serialPort.Write(powerRead.VOUT_Read); Thread.Sleep(100);
                 string v = GetReceiveMsg();
 

@@ -346,17 +346,25 @@
                                 Click="btn_OVP_Click"
                                 Content="OVP"
                                 Style="{StaticResource ButtonPrimary}" />
-                            <Button
-                                Name="btn_OUT"
+                            <hc:Badge
+                                Name="badge_OUT"
                                 Grid.Row="1"
-                                Margin="10"
-                                Click="btn_OUT_Click"
-                                Content="OUT"
-                                Style="{StaticResource ButtonInfo}" />
+                                Height="30"
+                                Margin="32,0"
+                                Status="Dot"
+                                Style="{DynamicResource BadgeSuccess}">
+                                <Button
+                                    Name="btn_OUT"
+                                    Width="80"
+                                    Click="btn_OUT_Click"
+                                    Content="OUT"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </hc:Badge>
                             <Button
                                 Name="btn_LOCK"
                                 Grid.Row="1"
                                 Grid.Column="1"
+                                Width="auto"
                                 Margin="10"
                                 Click="btn_LOCK_Click"
                                 Content="LOCK"

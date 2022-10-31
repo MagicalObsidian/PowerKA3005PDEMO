@@ -13,6 +13,11 @@
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PowerKA3005P">
+      <HintPath>..\..\..\PowerLib\PowerKA3005P\PowerKA3005P\bin\Debug\PowerKA3005P.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\icon_power.png" />
   </ItemGroup>
 </Project>

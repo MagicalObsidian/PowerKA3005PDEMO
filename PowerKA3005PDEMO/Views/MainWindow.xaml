@@ -140,7 +140,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <Grid Margin="10">
@@ -149,6 +149,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
+                    <!--  电流显示/设置  -->
                     <StackPanel Margin="10" Orientation="Vertical">
                         <StackPanel Margin="5" Orientation="Horizontal">
                             <TextBlock
@@ -164,14 +165,13 @@
                                 Fill="#326cf3"
                                 FontSize="25"
                                 FontWeight="Bold"
-                                Text="3.00"
+                                Text="0.00"
                                 TextAlignment="Center" />
                             <TextBlock
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Text="A" />
                         </StackPanel>
-
                         <hc:NumericUpDown
                             Name="I_Input"
                             Width="auto"
@@ -185,10 +185,10 @@
                             Value="{Binding ElementName=slider_I_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <hc:PreviewSlider
                             Name="slider_I_SetValue"
-                            Width="{Binding ElementName=I_Input}"
+                            Width="auto"
                             Margin="10"
                             Maximum="5.1"
-                            Value="500">
+                            PreviewPosition="0">
                             <hc:PreviewSlider.PreviewContent>
                                 <Label
                                     Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
@@ -198,6 +198,7 @@
                         </hc:PreviewSlider>
                     </StackPanel>
 
+                    <!--  电压显示/设置  -->
                     <StackPanel Grid.Column="1" Margin="10">
                         <StackPanel Margin="5" Orientation="Horizontal">
                             <TextBlock
@@ -213,7 +214,7 @@
                                 Fill="#326cf3"
                                 FontSize="25"
                                 FontWeight="Bold"
-                                Text="12.00"
+                                Text="00.00"
                                 TextAlignment="Center" />
                             <TextBlock
                                 HorizontalAlignment="Right"
@@ -230,18 +231,18 @@
                             hc:TitleElement.Title="设置电压"
                             hc:TitleElement.TitlePlacement="Left"
                             Style="{StaticResource NumericUpDownPlus}"
-                            ValueFormat="#0.000"
+                            ValueFormat="#00.00"
                             Value="{Binding ElementName=slider_V_SetValue, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <hc:PreviewSlider
                             Name="slider_V_SetValue"
-                            Width="{Binding ElementName=V_Input}"
+                            Width="auto"
                             Margin="10"
                             Maximum="31"
-                            Value="500">
+                            PreviewPosition="0">
                             <hc:PreviewSlider.PreviewContent>
                                 <Label
                                     Content="{Binding Path=(hc:PreviewSlider.PreviewPosition), RelativeSource={RelativeSource Self}}"
-                                    ContentStringFormat="#0.000"
+                                    ContentStringFormat="#00.00"
                                     Style="{StaticResource LabelPrimary}" />
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
@@ -252,54 +253,116 @@
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-
-                    <Grid Margin="10">
-                        <StackPanel Orientation="Vertical">
-
-                            <hc:ButtonGroup
+                    <!--  读取/保存设定值  -->
+                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                        <hc:ButtonGroup
+                            Name="radioButtonGroup"
+                            Width="auto"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <RadioButton
+                                Name="M1"
+                                Margin="5"
+                                Content="M1"
+                                IsChecked="True"
+                                Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                            <RadioButton
+                                Name="M2"
+                                Margin="5"
+                                Content="M2"
+                                Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                            <RadioButton
+                                Name="M3"
+                                Margin="5"
+                                Content="M3"
+                                Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                            <RadioButton
+                                Name="M4"
+                                Margin="5"
+                                Content="M4"
+                                Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                            <RadioButton
+                                Name="M5"
+                                Margin="5"
+                                Content="M5"
+                                Style="{StaticResource RadioButtonSameAsButtonInfo}" />
+                        </hc:ButtonGroup>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Button
+                                Name="btn_Save"
                                 Width="auto"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <RadioButton
-                                    Margin="5"
-                                    Content="M1"
-                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
-                                <RadioButton
-                                    Margin="5"
-                                    Content="M2"
-                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
-                                <RadioButton
-                                    Margin="5"
-                                    Content="M3"
-                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
-                                <RadioButton
-                                    Margin="5"
-                                    Content="M4"
-                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
-                                <RadioButton
-                                    Margin="5"
-                                    Content="M5"
-                                    Style="{StaticResource RadioButtonSameAsButtonInfo}" />
-                            </hc:ButtonGroup>
-
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <Button
-                                    Width="auto"
-                                    Margin="5"
-                                    Content="保存设定值"
-                                    Style="{StaticResource ButtonPrimary}" />
-                                <Button
-                                    Width="auto"
-                                    Margin="5"
-                                    Content="读取设定值"
-                                    Style="{StaticResource ButtonPrimary}" />
-                            </StackPanel>
-
+                                Margin="5"
+                                Click="btn_Save_Click"
+                                Content="保存设定值"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                Name="btn_Read"
+                                Width="auto"
+                                Margin="5"
+                                Click="btn_Read_Click"
+                                Content="读取设定值"
+                                Style="{StaticResource ButtonPrimary}" />
                         </StackPanel>
+                        <Button
+                            Name="btn_ReadCurrent"
+                            Width="auto"
+                            Margin="5"
+                            Click="btn_ReadCurrent_Click"
+                            Content="显示当前电流电压"
+                            Style="{StaticResource ButtonPrimary}" />
+                    </StackPanel>
 
-                    </Grid>
+                    <!--  一些按钮操作  -->
+                    <StackPanel
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Name="btn_OCP"
+                                Grid.Row="0"
+                                Margin="10"
+                                Click="btn_OCP_Click"
+                                Content="OCP"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                Name="btn_OVP"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10"
+                                Click="btn_OVP_Click"
+                                Content="OVP"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                Name="btn_OUT"
+                                Grid.Row="1"
+                                Margin="10"
+                                Click="btn_OUT_Click"
+                                Content="OUT"
+                                Style="{StaticResource ButtonInfo}" />
+                            <Button
+                                Name="btn_LOCK"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10"
+                                Click="btn_LOCK_Click"
+                                Content="LOCK"
+                                Style="{StaticResource ButtonPrimary}" />
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </GroupBox>
